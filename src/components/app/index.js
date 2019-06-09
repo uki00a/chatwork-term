@@ -91,7 +91,10 @@ export default function App({
       {
         key: 'C-s',
         description: 'Submit',
-        handler: () => addMessageToRoom(messageEditor.current.getValue())
+        handler: () => {
+          addMessageToRoom(messageEditor.current.getValue());
+          messageEditor.current.clearValue();
+        }
       }
     ]));
   }, [messageEditor, addMessageToRoom]);
