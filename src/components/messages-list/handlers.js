@@ -1,5 +1,5 @@
 import assert from 'assert';
-import { find, findLast, first, last } from '../../modules/utils';
+import { findLast, first, last } from '../../modules/utils';
 
 export function createScrollHandler(scrollable) {
   let hovered = null;

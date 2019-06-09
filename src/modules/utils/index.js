@@ -1,5 +1,4 @@
 export const numberOfLines = s => s.split(/\n/).length || 1;
-export const find = (array, predicate) => array.find(predicate);
 export const findLast = (array, predicate) => {
   for (let i = array.length - 1; i > -1; --i) {
     if (predicate(array[i])) {
