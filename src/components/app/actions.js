@@ -21,5 +21,5 @@ export function addMessageToRoomSuccess(payload) {
 }
 
 export function activeShortcutsChanged(shortcuts) {
-  return { type: ACTIVE_SHORTCUTS_CHANGED, payload: shortcuts };
+  return { type: ACTIVE_SHORTCUTS_CHANGED, payload: shortcuts }
 }

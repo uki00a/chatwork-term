@@ -24,6 +24,13 @@ export default function App({
   const [state, dispatch] = useReducer(reducer, initialState);
   const roomsList = useRef(null);
   const messagesList = useRef(null);
+  const messageEditor = useRef(null);
+
+  useEffect(() => {
+    process.on('unhandledRejection', error => {
+      roomsList.current.screen.debug(error);
+    });
+  }, []);
 
   useEffect(async () => {
     await operations.loadRooms({ client, dispatch });
@@ -80,8 +87,14 @@ export default function App({
   }, []);
 
   const activateMessageEditor = useCallback(() => {
-    dispatch(actions.activeShortcutsChanged([]));
-  }, []);
+    dispatch(actions.activeShortcutsChanged([
+      {
+        key: 'C-s',
+        description: 'Submit',
+        handler: () => addMessageToRoom(messageEditor.current.getValue())
+      }
+    ]));
+  }, [messageEditor, addMessageToRoom]);
 
   return (
     <box>
@@ -108,6 +121,7 @@ export default function App({
           onFocus={activateMessagesList}
         />
         <MessageEditor
+          ref={messageEditor}
           position={{ height: '20%', top: '75%', width: '98%' }}
           style={state.theme.editor}
           onKeypress={handleShortcut}

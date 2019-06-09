@@ -3,13 +3,15 @@ import {
   roomFromJSON,
   messageFromJSON
 } from './mappers';
+import { URLSearchParams } from 'url';
 
 class ChatworkClient {
   constructor(accessToken) {
     this._axios = axios.create({
       baseURL: 'https://api.chatwork.com/v2',
       headers: {
-        'X-ChatWorkToken': accessToken
+        'X-ChatWorkToken': accessToken,
+        'Content-Type': 'application/x-www-form-urlencoded'
       }
     });
   }
@@ -25,12 +27,13 @@ class ChatworkClient {
   }
 
   getMessageById(id, roomId) {
-    return this._callAPI(`/rooms/${roomId}/message/${id}`, messageFromJSON);
+    return this._callAPI(`/rooms/${roomId}/messages/${id}`, messageFromJSON);
   }
 
   addMessageToRoom(body, roomId) {
     return this._callAPI(`/rooms/${roomId}/messages`, x => x.message_id, {
-      data: { body }
+      method: 'POST',
+      data: toURLSearchParams({ body })
     });
   }
 
@@ -47,6 +50,13 @@ class ChatworkClient {
         }
       });
   }
+}
+
+function toURLSearchParams(object) {
+  return Object.keys(object).reduce((params, key) => {
+    params.append(key, object[key]);
+    return params;
+  }, new URLSearchParams());
 }
 
 function removeInvalidMessages(messages) {
