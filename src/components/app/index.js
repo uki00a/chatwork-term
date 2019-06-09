@@ -9,9 +9,11 @@ import {
 import RoomsList from '../rooms-list';
 import MessagesList from '../messages-list';
 import MessageEditor from '../message-editor';
+import Shortcuts from '../shortcuts';
 // FIXME
 import { createScrollHandler } from '../messages-list/handlers';
 import reducer from './reducer';
+import * as actions from './actions';
 import * as operations from './operations';
 
 export default function App({
@@ -60,31 +62,62 @@ export default function App({
     return state.rooms.find(x => x.id === state.activeRoomId);
   }, [state.activeRoomId]);
 
+  const handleShortcut = useCallback((ch, key) => { // eslint-disable-line
+    const shortcut = state.activeShortcuts.find(x => x.key === key.full); 
+    messagesList.current.screen.debug(key)
+    if (shortcut) {
+      shortcut.handler();
+      return false;
+    }
+  }, [state.activeShortcuts]);
+
+  const activateRoomsList = useCallback(() => {
+    dispatch(actions.activeShortcutsChanged([]));
+  }, []); 
+
+  const activateMessagesList = useCallback(() => {
+    dispatch(actions.activeShortcutsChanged([]));
+  }, []);
+
+  const activateMessageEditor = useCallback(() => {
+    dispatch(actions.activeShortcutsChanged([]));
+  }, []);
+
   return (
     <box>
       <RoomsList
-        position={{ width: '25%' }}
+        position={{ width: '25%', height: '95%' }}
         style={state.theme.list}
         rooms={state.rooms}
         ref={roomsList}
         onSelect={handleRoomSelect}
+        onKeypress={handleShortcut}
+        onFocus={activateRoomsList}
         focused
       />
       <box
         label={activeRoom ? activeRoom.name : ''}
         border='line'
-        position={{ left: '25%', width: '75%' }}>
+        position={{ left: '25%', width: '75%', height: '95%' }}>
         <MessagesList
-          position={{ height: '78%', width: '98%' }}
+          position={{ height: '75%', width: '98%' }}
           ref={messagesList}
           messages={state.messages}
           style={state.theme.box}
+          onKeypress={handleShortcut}
+          onFocus={activateMessagesList}
         />
         <MessageEditor
-          position={{ height: '20%', top: '78%', width: '98%' }}
+          position={{ height: '20%', top: '75%', width: '98%' }}
           style={state.theme.editor}
+          onKeypress={handleShortcut}
+          onFocus={activateMessageEditor}
         />
       </box>
+      <Shortcuts
+        position={{ height: '5%', top: '95%', width: '100%' }}
+        shortcuts={state.activeShortcuts}
+      />
     </box>
   );
 }

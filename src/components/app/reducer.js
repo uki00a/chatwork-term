@@ -2,7 +2,8 @@ import {
   LIST_ROOMS_SUCCESS,
   LIST_MESSAGES_SUCCESS,
   ACTIVE_ROOM_CHANGED,
-  ADD_MESSAGE_TO_ROOM_SUCCESS
+  ADD_MESSAGE_TO_ROOM_SUCCESS,
+  ACTIVE_SHORTCUTS_CHANGED
 } from './actions';
 
 export default function reducer(state, action) {
@@ -22,6 +23,8 @@ export default function reducer(state, action) {
     } else {
       return state;
     }
+  case ACTIVE_SHORTCUTS_CHANGED:
+    return { ...state, activeShortcuts: action.payload };
   default:
     return state;
   }

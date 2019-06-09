@@ -18,6 +18,7 @@ async function main() {
     rooms: [],
     messages: [],
     activeRoomId: null,
+    activeShortcuts: [],
     theme: initializeTheme()
   });
   render(
