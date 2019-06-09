@@ -1,13 +1,18 @@
-import { createElement, forwardRef } from 'rax';
+import { createElement, forwardRef, useEffect } from 'rax';
 import blessed from 'neo-blessed';
 import assert from 'assert';
 import { numberOfLines, butLast } from '../../modules/utils';
+import { registerHandlers } from './handlers';
 
 const MessagesList = forwardRef(({
   messages = [],
   style = {},
   ...restProps
 }, ref) => {
+  useEffect(() => {
+    return registerHandlers(ref.current);
+  }, []);
+
   const formattedMessages = messages.map(formatMessage);
   const offsets = computeOffsets(formattedMessages);
 

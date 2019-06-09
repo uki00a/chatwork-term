@@ -1,7 +1,15 @@
 import assert from 'assert';
 import { findLast, first, last } from '../../modules/utils';
 
-export function createScrollHandler(scrollable) {
+export function registerHandlers(element) {
+  const onScroll = createScrollHandler(element);
+  element.on('scroll', onScroll);
+  return () => {
+    element.removeEventListener('scroll', onScroll);
+  };
+}
+
+function createScrollHandler(scrollable) {
   let hovered = null;
   let previousScrollTop = scrollable.getScroll();
 
@@ -13,12 +21,15 @@ export function createScrollHandler(scrollable) {
     if (hovered == null) {
       element.emit('mouseover');
       hovered = element;
+      scrollable.selected = scrollable.children.indexOf(element); // FIXME this is ugly code
     } else if (hovered != element) {
       hovered.emit('mouseout');
       element.emit('mouseover');
       hovered = element;
+      scrollable.selected = scrollable.children.indexOf(element); // FIXME this is ugly code
     }
     assert(hovered);
+    assert(typeof scrollable.selected === 'number');
   }
 
   function determineHoveredElement(children, top) {

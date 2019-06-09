@@ -10,8 +10,6 @@ import RoomsList from '../rooms-list';
 import MessagesList from '../messages-list';
 import MessageEditor from '../message-editor';
 import Shortcuts from '../shortcuts';
-// FIXME
-import { createScrollHandler } from '../messages-list/handlers';
 import reducer from './reducer';
 import * as actions from './actions';
 import * as operations from './operations';
@@ -34,11 +32,6 @@ export default function App({
 
   useEffect(async () => {
     await operations.loadRooms({ client, dispatch });
-  }, []);
-
-  useEffect(() => {
-    const handler = createScrollHandler(messagesList.current);
-    messagesList.current.on('scroll', handler);
   }, []);
 
   useEffect(() => {
