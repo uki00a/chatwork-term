@@ -1,4 +1,5 @@
 import { createElement, forwardRef } from 'rax';
+import blessed from 'neo-blessed';
 
 const RoomsList = forwardRef(({
   rooms = [],
@@ -25,7 +26,9 @@ const RoomsList = forwardRef(({
 ));
 
 function formatRoomName(room) {
-  return room.unreadNum > 0 ? `${room.name} (${room.unreadNum})` : room.name;
+  return room.unreadNum > 0
+    ? `{bold}${blessed.helpers.escape(room.name)} (${room.unreadNum}){/}`
+    : room.name;
 }
 
 export default RoomsList;
