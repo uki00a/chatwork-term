@@ -1,0 +1,44 @@
+{
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": 6,
+    "ecmaFeatures": {
+      "jsx": true,
+      "experimentalObjectRestSpread": true
+    }
+  },
+  "settings": {
+    "react": {
+      "pragma": "createElement"
+    }
+  },
+  "env": {
+    "node": true,
+    "es6": true,
+    "mocha": true
+  },
+  "extends": "eslint:recommended",
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+        "jsx": true
+    },
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "react"
+  ],
+  "rules": {
+    "indent": ["error", 2],
+    "no-trailing-spaces": "warn",
+    "no-unused-vars": ["error", {
+      "varsIgnorePattern": "createElement"
+    }],
+    "react/jsx-uses-vars": "error"
+  }
+}
