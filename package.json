@@ -20,7 +20,8 @@
     "axios": "^0.18.0",
     "neo-blessed": "^0.2.0",
     "rax": "^1.0.4",
-    "rax-blessed-driver": "^0.0.1"
+    "rax-blessed-driver": "^0.0.1",
+    "xdg-basedir": "^4.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
