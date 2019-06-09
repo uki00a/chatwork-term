@@ -6,6 +6,7 @@ import createChatworkClient from './modules/chatwork/client';
 import { readSettings } from './modules/config';
 import { initializeTheme } from './modules/theme';
 import screen from './screen';
+import reducer from './components/app/reducer';
 
 const driver = createDriver(blessed);
 
@@ -14,18 +15,16 @@ async function main() {
   const client = createChatworkClient({
     accessToken: settings.accessToken
   });
-  const initialState = Object.freeze({
-    rooms: [],
-    messages: [],
-    activeRoomId: null,
-    activeShortcuts: [],
+  // FIXME
+  const state = {
+    ...reducer(),
     theme: initializeTheme()
-  });
+  };
   render(
     <App
       client={client}
       settings={settings}
-      initialState={initialState}
+      initialState={state}
     />,
     screen,
     { driver }

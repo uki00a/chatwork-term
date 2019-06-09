@@ -6,7 +6,15 @@ import {
   ACTIVE_SHORTCUTS_CHANGED
 } from './actions';
 
-export default function reducer(state, action) {
+export const initialState = {
+  rooms: [],
+  messages: [],
+  activeRoomId: null,
+  activeShortcuts: [],
+  theme: null
+};
+
+export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
   case LIST_ROOMS_SUCCESS:
     return { ...state, rooms: action.payload };
