@@ -8,7 +8,7 @@ const RoomsList = forwardRef(({
   <list
     onSelect={(_, index) => onSelect(rooms[index])}
     ref={ref}
-    items={rooms.map(x => x.name)}
+    items={rooms.map(formatRoomName)}
     width='90%'
     height='85%'
     left='5%'
@@ -23,5 +23,9 @@ const RoomsList = forwardRef(({
     {...restProps}>
   </list>
 ));
+
+function formatRoomName(room) {
+  return room.unreadNum > 0 ? `${room.name} (${room.unreadNum})` : room.name;
+}
 
 export default RoomsList;
