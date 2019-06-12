@@ -18,6 +18,8 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "marked": "^0.6.2",
+    "marked-terminal": "^3.2.0",
     "neo-blessed": "^0.2.0",
     "rax": "^1.0.4",
     "rax-blessed-driver": "^0.0.1",

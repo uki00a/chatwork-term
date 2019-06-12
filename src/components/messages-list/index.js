@@ -3,6 +3,7 @@ import blessed from 'neo-blessed';
 import assert from 'assert';
 import { numberOfLines, butLast } from '../../modules/utils';
 import { registerHandlers } from './handlers';
+import parseMarkdown from '../../modules/markdown';
 
 const MessagesList = forwardRef(({
   messages = [],
@@ -74,7 +75,7 @@ function computeHeight(message) {
 function formatMessage(message) {
   return (
     `{bold}{gray-fg}[${blessed.helpers.escape(message.account.name)}] ${message.sendTime}{/}\n` +
-    blessed.helpers.escape(message.body.trim())
+    parseMarkdown(blessed.helpers.escape(message.body.trim()))
   );
 }
 
