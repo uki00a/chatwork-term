@@ -37,18 +37,17 @@ class ChatworkClient {
     });
   }
 
-  _callAPI(path, responseMapper, options = {}) {
-    return this._axios.request({
+  async _callAPI(path, responseMapper, options = {}) {
+    const response = await this._axios.request({
       url: path,
       ...options
-    })
-      .then(response => {
-        if (Array.isArray(response.data)) {
-          return response.data.map(responseMapper);
-        } else {
-          return responseMapper(response.data);
-        }
-      });
+    });
+
+    if (Array.isArray(response.data)) {
+      return response.data.map(responseMapper);
+    } else {
+      return responseMapper(response.data);
+    }
   }
 }
 
