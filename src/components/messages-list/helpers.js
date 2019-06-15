@@ -71,7 +71,7 @@ function selectChild(parent, child) {
   assert(parent.scrollable);
 
   const childIndex = parent.children.indexOf(child);
-  const offset = childIndex > parent.selected
+  const offset = childIndex > (parent.selected || -1)
     ? 1   // scroll down
     : -1; // scroll up
   mouseout(parent.children[parent.selected]);
