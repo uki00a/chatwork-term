@@ -50,7 +50,7 @@ const MessagesList = forwardRef(({
         onKeypress(ch, key);
       }
     }
-  }, [ref]);
+  }, [ref, onKeypress]);
 
   const formattedMessages = messages.map(formatMessage);
   const offsets = computeOffsets(formattedMessages);
@@ -60,14 +60,12 @@ const MessagesList = forwardRef(({
   return (
     <box
       ref={ref}
-      keys
-      clickable
       keyable
       scrollable
       scrollbar
-      mouse
       border='line'
       tags
+      keys
       style={style}
       shrink
       onKeypress={handleKeypress}

@@ -9,6 +9,7 @@ import {
 import RoomsList from '../rooms-list';
 import MessagesList from '../messages-list';
 import MessageEditor from '../message-editor';
+import MessagePreviewer from '../message-previewer';
 import Shortcuts from '../shortcuts';
 import reducer from './reducer';
 import * as actions from './actions';
@@ -23,6 +24,7 @@ export default function App({
   const roomsList = useRef(null);
   const messagesList = useRef(null);
   const messageEditor = useRef(null);
+  const messagePreviewer = useRef(null);
 
   useEffect(() => {
     process.on('unhandledRejection', error => {
@@ -32,6 +34,7 @@ export default function App({
 
   useEffect(async () => {
     await operations.loadRooms({ client, dispatch });
+    roomsList.current.focus();
   }, []);
 
   useEffect(() => {
@@ -61,22 +64,23 @@ export default function App({
     return state.rooms.find(x => x.id === state.activeRoomId);
   }, [state.activeRoomId]);
 
-  const handleShortcut = useCallback((ch, key) => { // eslint-disable-line
-    const shortcut = state.activeShortcuts.find(x => x.key === key.full); 
-    messagesList.current.screen.debug(key)
-    if (shortcut) {
-      shortcut.handler();
-      return false;
-    }
-  }, [state.activeShortcuts]);
-
   const activateRoomsList = useCallback(() => {
     dispatch(actions.activeShortcutsChanged([]));
   }, []); 
 
   const activateMessagesList = useCallback(() => {
-    dispatch(actions.activeShortcutsChanged([]));
-  }, []);
+    dispatch(actions.activeShortcutsChanged([
+      {
+        key: 'return',
+        description: 'Preview',
+        handler: () => {
+          const index = messagesList.current.selected; // FIXME selected
+          const message = state.messages[index];
+          dispatch(actions.previewMessage(message));
+        }
+      }
+    ]));
+  }, [state.messages, messagesList]);
 
   const activateMessageEditor = useCallback(() => {
     dispatch(actions.activeShortcutsChanged([
@@ -89,7 +93,25 @@ export default function App({
         }
       }
     ]));
-  }, [messageEditor, addMessageToRoom]);
+  }, [messageEditor]);
+
+  const activateMessagePreviewer = useCallback(() => {
+    dispatch(actions.activeShortcutsChanged([
+      {
+        key: 'escape',
+        description: 'Close',
+        handler: () => dispatch(actions.unpreviewMessage())
+      }
+    ]));
+  }, [messagePreviewer]);
+
+  const handleShortcut = useCallback((ch, key) => { // eslint-disable-line
+    const shortcut = state.activeShortcuts.find(x => x.key === key.full); 
+    if (shortcut) {
+      shortcut.handler();
+      return false;
+    }
+  }, [state.activeShortcuts]);
 
   return (
     <box>
@@ -101,7 +123,6 @@ export default function App({
         onSelect={handleRoomSelect}
         onKeypress={handleShortcut}
         onFocus={activateRoomsList}
-        focused
       />
       <box
         label={activeRoom ? activeRoom.name : ''}
@@ -125,6 +146,13 @@ export default function App({
           onFocus={activateMessageEditor}
         />
       </box>
+      <MessagePreviewer
+        open={state.messagePreviewer != null}
+        message={state.messagePreviewer}
+        onFocus={activateMessagePreviewer}
+        onKeypress={handleShortcut}
+        position={{ width: '100%', height: '95%' }}
+      />
       <Shortcuts
         position={{ height: '5%', top: '95%', width: '100%' }}
         shortcuts={state.activeShortcuts}

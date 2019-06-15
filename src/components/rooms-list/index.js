@@ -16,9 +16,7 @@ const RoomsList = forwardRef(({
     top='11%'
     keys
     vi
-    clickable
     keyable
-    mouse
     border='line'
     tags
     {...restProps}>

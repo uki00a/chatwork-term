@@ -15,6 +15,7 @@ screen.on('element keypress', (el, ch, key) => {
     focusNext(screen);
   }
 });
+screen.program.disableMouse();
 
 function focusNext(screen) {
   const isInputElement = typeof screen.focused.cancel === 'function';
