@@ -1,4 +1,4 @@
-import { createElement, useRef, useState, useEffect } from 'rax';
+import { createElement, useRef, useEffect } from 'rax';
 import parseMarkdown from '../../modules/markdown';
 
 export default function MessagePreviewer({ message, open = false, ...restProps }) {
