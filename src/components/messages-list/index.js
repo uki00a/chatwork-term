@@ -50,7 +50,7 @@ const MessagesList = forwardRef(({
         onKeypress(ch, key);
       }
     }
-  }, [ref]);
+  }, [ref, onKeypress]);
 
   const formattedMessages = messages.map(formatMessage);
   const offsets = computeOffsets(formattedMessages);
