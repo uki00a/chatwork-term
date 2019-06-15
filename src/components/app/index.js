@@ -36,7 +36,6 @@ export default function App({
 
   useEffect(() => {
     if (state.messages.length > 0) { // FIXME
-      messagesList.current.setScrollPerc(100);
       messagesList.current.focus();
     }
   }, [state.messages]);
