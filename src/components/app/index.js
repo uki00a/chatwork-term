@@ -108,6 +108,7 @@ export default function App({
         border='line'
         position={{ left: '25%', width: '75%', height: '95%' }}>
         <MessagesList
+          hidden={state.messages.length === 0}
           position={{ height: '75%', width: '98%' }}
           ref={messagesList}
           messages={state.messages}
@@ -116,6 +117,7 @@ export default function App({
           onFocus={activateMessagesList}
         />
         <MessageEditor
+          hidden={state.messages.length === 0}
           ref={messageEditor}
           position={{ height: '20%', top: '75%', width: '98%' }}
           style={state.theme.editor}
