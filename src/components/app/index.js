@@ -108,6 +108,13 @@ export default function App({
           addMessageToRoom(messageEditor.current.getValue());
           messageEditor.current.clearValue();
         }
+      },
+      {
+        key: 'C-e',
+        description: 'Open editor',
+        handler: () => messageEditor.current.readEditor(value => {
+          messageEditor.current.setValue(value);
+        })
       }
     ]));
   }, [messageEditor]);

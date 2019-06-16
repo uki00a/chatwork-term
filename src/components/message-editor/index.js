@@ -2,7 +2,7 @@ import { forwardRef, createElement } from 'rax';
 
 const MessageEditor = forwardRef((props, ref) => {
   return (
-    <textbox
+    <textarea
       ref={ref}
       keyable
       vi
