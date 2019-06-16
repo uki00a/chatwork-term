@@ -12,7 +12,6 @@ import MessageEditor from '../message-editor';
 import MessagePreviewer from '../message-previewer';
 import Shortcuts from '../shortcuts';
 import reducer from './reducer';
-import * as actions from './actions';
 import * as operations from './operations';
 import { startPolling } from './polling';
 
@@ -41,7 +40,7 @@ export default function App({
     operations.loadRooms({ client, dispatch }).then(() => {
       roomsList.current.focus();
     });
-  }, []);
+  }, [client]);
 
   useEffect(() => {
     if (state.messages.length > 0) { // FIXME
@@ -59,8 +58,7 @@ export default function App({
         targetRoomId: state.activeRoomId
       });
     }
-  }, [state.activeRoomId, messagesList]);
-  
+  }, [state.activeRoomId, messagesList, client, settings]);
 
   const handleRoomSelect = useCallback(async room => {
     await operations.activateRoom({
@@ -68,7 +66,7 @@ export default function App({
       dispatch,
       targetRoomId: room.id
     });
-  }, [state.activeRoomId]);
+  }, [client]);
 
   const activeRoom = useMemo(() => {
     return state.rooms.find(x => x.id === state.activeRoomId);
@@ -76,7 +74,7 @@ export default function App({
 
   const activateRoomsList = useCallback(() => {
     operations.activateRoomsList({ dispatch });
-  }, []); 
+  }, []);
 
   const activateMessagesList = useCallback(() => {
     operations.activateMessagesList({
@@ -86,7 +84,7 @@ export default function App({
       activeRoomId: state.activeRoomId,
       client
     });
-  }, [state.messages, state.activeRoomId]);
+  }, [state.messages, state.activeRoomId, client]);
 
   const activateMessageEditor = useCallback(() => {
     operations.activateMessageEditor({
@@ -95,14 +93,14 @@ export default function App({
       client,
       activeRoomId: state.activeRoomId
     });
-  }, [state.activeRoomId]);
+  }, [state.activeRoomId, client]);
 
   const activateMessagePreviewer = useCallback(() => {
     operations.activateMessagePreviewer({ dispatch });
   }, []);
 
   const handleShortcut = useCallback((ch, key) => { // eslint-disable-line
-    const shortcut = state.activeShortcuts.find(x => x.key === key.full); 
+    const shortcut = state.activeShortcuts.find(x => x.key === key.full);
     if (shortcut) {
       shortcut.handler();
       return false;
