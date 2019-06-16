@@ -3,15 +3,15 @@ import { render, createElement } from 'rax';
 import createDriver from 'rax-blessed-driver';
 import App from './components/app';
 import createChatworkClient from './modules/chatwork/client';
-import { readSettings } from './modules/config';
+import { readOrCreateSettings } from './modules/config';
 import { initializeTheme } from './modules/theme';
-import screen from './screen';
+import createScreen from './screen';
 import reducer from './components/app/reducer';
 
 const driver = createDriver(blessed);
 
 async function main() {
-  const settings = await readSettings();
+  const settings = await readOrCreateSettings();
   const client = createChatworkClient({
     accessToken: settings.accessToken
   });
@@ -20,6 +20,7 @@ async function main() {
     ...reducer(),
     theme: initializeTheme(settings.theme)
   };
+  const screen = createScreen();
   render(
     <App
       client={client}

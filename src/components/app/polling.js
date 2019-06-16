@@ -7,7 +7,6 @@ import * as actions from './actions';
  */
 
 const DEFAULT_POLLING_INTERVAL = 60; // 1 minute
-const MINIMUM_POLLING_INTERVAL = 2; // 2 seconds
 
 /**
  * @param {object} param0
@@ -41,9 +40,6 @@ export function startPolling({
  */
 function computePollingInterval(settings) {
   const pollingInterval = settings.pollingInterval || DEFAULT_POLLING_INTERVAL;
-  if (pollingInterval < MINIMUM_POLLING_INTERVAL) {
-    throw new Error(`settings.pollingInterval must be greather than or equal to ${MINIMUM_POLLING_INTERVAL}`);
-  }
   return pollingInterval * 1000;
 }
 

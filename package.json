@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "make-dir": "^3.0.0",
     "marked": "^0.6.2",
     "marked-terminal": "^3.2.0",
     "neo-blessed": "^0.2.0",
