@@ -31,7 +31,8 @@
     "sourceType": "module"
   },
   "plugins": [
-    "react"
+    "react",
+    "react-hooks"
   ],
   "rules": {
     "indent": ["error", 2],
@@ -43,6 +44,8 @@
     "no-warning-comments": ["warn", {
       "terms": ["todo", "fixme"],
       "location": "anywhere"
-    }]
+    }],
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
   }
 }
