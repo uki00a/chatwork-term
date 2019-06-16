@@ -2,6 +2,7 @@ export const LIST_ROOMS_SUCCESS = 'LIST_ROOMS_SUCCESS';
 export const LIST_MESSAGES_SUCCESS = 'LIST_MESSAGES_SUCCESS';
 export const ACTIVE_ROOM_CHANGED = 'ACTIVE_ROOM_CHANGED';
 export const ADD_MESSAGE_TO_ROOM_SUCCESS = 'ADD_MESSAGE_TO_ROOM_SUCCESS';
+export const UPDATE_MESSAGE = 'UPDATE_MESSAGE';
 export const ACTIVE_SHORTCUTS_CHANGED = 'ACTIVE_SHORTCUTS_CHANGED';
 export const PREVIEW_MESSAGE = 'PREVIEW_MESSAGE';
 export const UNPREVIEW_MESSAGE = 'UNPREVIEW_MESSAGE';
@@ -20,6 +21,10 @@ export function activeRoomChanged(targetRoomId) {
 
 export function addMessageToRoomSuccess(payload) {
   return { type: ADD_MESSAGE_TO_ROOM_SUCCESS, payload };
+}
+
+export function updateMessage(payload) {
+  return { type: UPDATE_MESSAGE, payload };
 }
 
 export function activeShortcutsChanged(shortcuts) {

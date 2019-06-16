@@ -3,6 +3,7 @@ import {
   LIST_MESSAGES_SUCCESS,
   ACTIVE_ROOM_CHANGED,
   ADD_MESSAGE_TO_ROOM_SUCCESS,
+  UPDATE_MESSAGE,
   ACTIVE_SHORTCUTS_CHANGED,
   PREVIEW_MESSAGE,
   UNPREVIEW_MESSAGE
@@ -30,6 +31,21 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         messages: state.messages.concat(action.payload.message)
+      };
+    } else {
+      return state;
+    }
+  case UPDATE_MESSAGE:
+    if (state.activeRoomId === action.payload.roomId) {
+      return {
+        ...state,
+        messages: state.messages.map(x => {
+          if (x.id === action.payload.id) {
+            return { ...x, body: action.payload.body };
+          } else {
+            return x;
+          }
+        })
       };
     } else {
       return state;

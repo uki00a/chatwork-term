@@ -97,9 +97,29 @@ export default function App({
           const message = state.messages[index];
           dispatch(actions.previewMessage(message));
         }
+      },
+      {
+        key: 'C-e',
+        description: 'Edit',
+        handler: () => {
+          const index = messagesList.current.selected; // FIXME selected
+          const message = state.messages[index];
+          messagesList.current.screen.readEditor({ value: message.body }, async (error, body) => {
+            if (error) {
+              throw error; // TODO error handling
+            }
+            await operations.updateMessage({
+              client,
+              dispatch,
+              id: message.id,
+              roomId: state.activeRoomId,
+              body
+            });
+          });
+        }
       }
     ]));
-  }, [state.messages, messagesList]);
+  }, [state.messages, state.activeRoomId]);
 
   const activateMessageEditor = useCallback(() => {
     dispatch(actions.activeShortcutsChanged([

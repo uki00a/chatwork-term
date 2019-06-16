@@ -20,3 +20,8 @@ export async function addMessageToRoom({ client, dispatch, targetRoomId, body })
   const newMessage = await client.getMessageById(id, targetRoomId);
   dispatch(actions.addMessageToRoomSuccess({ message: newMessage, targetRoomId }));
 }
+
+export async function updateMessage({ client, dispatch, roomId, id, body }) {
+  await client.updateMessage({ id, roomId, body });
+  dispatch(actions.updateMessage({ id, roomId, body }));
+}

@@ -37,6 +37,13 @@ class ChatworkClient {
     });
   }
 
+  updateMessage({ id, roomId, body = '' }) {
+    return this._callAPI(`/rooms/${roomId}/messages/${id}`, x => x.message_id, {
+      method: 'PUT',
+      data: toURLSearchParams({ body })
+    });
+  }
+
   async _callAPI(path, responseMapper, options = {}) {
     const response = await this._axios.request({
       url: path,
