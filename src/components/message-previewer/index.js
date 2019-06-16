@@ -14,6 +14,7 @@ export default function MessagePreviewer({ message, open = false, ...restProps }
       messagePreviewer.current.focus();
       messagePreviewer.current.setFront();
       messagePreviewer.current.setContent(parseMarkdown(message.body));
+      messagePreviewer.current.setScrollPerc(0);
       messagePreviewer.current.show();
     } else {
       messagePreviewer.current.screen.rewindFocus();
