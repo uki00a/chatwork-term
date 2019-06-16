@@ -68,7 +68,7 @@ export async function updateMessage({ client, dispatch, roomId, id, body }) {
  * @param {Function} param0.dispatch
  */
 export function activateRoomsList({ dispatch }) {
-  dispatch(actions.activeShortcutsChanged([]));
+  dispatch(actions.activateShortcuts([]));
 }
 
 /**
@@ -86,7 +86,7 @@ export function activateMessagesList({
   messages,
   activeRoomId
 }) {
-  dispatch(actions.activeShortcutsChanged([
+  dispatch(actions.activateShortcuts([
     {
       key: 'return',
       description: 'Preview',
@@ -132,7 +132,7 @@ export function activateMessageEditor({
   client,
   activeRoomId
 }) {
-  dispatch(actions.activeShortcutsChanged([
+  dispatch(actions.activateShortcuts([
     {
       key: 'C-s',
       description: 'Submit',
@@ -161,7 +161,7 @@ export function activateMessageEditor({
  * @param {Function} param0.dispatch
  */
 export function activateMessagePreviewer({ dispatch }) {
-  dispatch(actions.activeShortcutsChanged([
+  dispatch(actions.activateShortcuts([
     {
       key: 'escape',
       description: 'Close',

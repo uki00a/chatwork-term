@@ -4,7 +4,7 @@ import {
   ACTIVE_ROOM_CHANGED,
   ADD_MESSAGE_TO_ROOM_SUCCESS,
   UPDATE_MESSAGE,
-  ACTIVE_SHORTCUTS_CHANGED,
+  ACTIVATE_SHORTCUTS,
   PREVIEW_MESSAGE,
   UNPREVIEW_MESSAGE
 } from './actions';
@@ -50,7 +50,7 @@ export default function reducer(state = initialState, action = {}) {
     } else {
       return state;
     }
-  case ACTIVE_SHORTCUTS_CHANGED:
+  case ACTIVATE_SHORTCUTS:
     return { ...state, activeShortcuts: action.payload };
   case PREVIEW_MESSAGE:
     return { ...state, messagePreviewer: action.payload };

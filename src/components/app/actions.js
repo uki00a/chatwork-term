@@ -3,7 +3,7 @@ export const LIST_MESSAGES_SUCCESS = 'LIST_MESSAGES_SUCCESS';
 export const ACTIVE_ROOM_CHANGED = 'ACTIVE_ROOM_CHANGED';
 export const ADD_MESSAGE_TO_ROOM_SUCCESS = 'ADD_MESSAGE_TO_ROOM_SUCCESS';
 export const UPDATE_MESSAGE = 'UPDATE_MESSAGE';
-export const ACTIVE_SHORTCUTS_CHANGED = 'ACTIVE_SHORTCUTS_CHANGED';
+export const ACTIVATE_SHORTCUTS = 'ACTIVATE_SHORTCUTS';
 export const PREVIEW_MESSAGE = 'PREVIEW_MESSAGE';
 export const UNPREVIEW_MESSAGE = 'UNPREVIEW_MESSAGE';
 
@@ -27,8 +27,8 @@ export function updateMessage(payload) {
   return { type: UPDATE_MESSAGE, payload };
 }
 
-export function activeShortcutsChanged(shortcuts) {
-  return { type: ACTIVE_SHORTCUTS_CHANGED, payload: shortcuts }
+export function activateShortcuts(shortcuts) {
+  return { type: ACTIVATE_SHORTCUTS, payload: shortcuts }
 }
 
 export function previewMessage(message) {
