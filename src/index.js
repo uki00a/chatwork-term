@@ -18,7 +18,7 @@ async function main() {
   // FIXME
   const state = {
     ...reducer(),
-    theme: initializeTheme()
+    theme: initializeTheme(settings.theme)
   };
   render(
     <App
