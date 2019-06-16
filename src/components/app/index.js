@@ -30,7 +30,6 @@ export default function App({
   const roomsList = useRef(null);
   const messagesList = useRef(null);
   const messageEditor = useRef(null);
-  const messagePreviewer = useRef(null);
 
   useEffect(() => {
     process.on('unhandledRejection', error => {
@@ -38,9 +37,10 @@ export default function App({
     });
   }, []);
 
-  useEffect(async () => {
-    await operations.loadRooms({ client, dispatch });
-    roomsList.current.focus();
+  useEffect(() => {
+    operations.loadRooms({ client, dispatch }).then(() => {
+      roomsList.current.focus();
+    });
   }, []);
 
   useEffect(() => {
@@ -49,16 +49,18 @@ export default function App({
     }
   }, [state.messages]);
 
-  if (settings.enablePolling) {
-    useEffect(() => {
+
+  useEffect(() => {
+    if (settings.enablePolling) {
       return startPolling({
         client,
         settings,
         dispatch,
         targetRoomId: state.activeRoomId
       });
-    }, [state.activeRoomId, messagesList]);
-  }
+    }
+  }, [state.activeRoomId, messagesList]);
+  
 
   const handleRoomSelect = useCallback(async room => {
     await operations.activateRoom({
@@ -79,7 +81,7 @@ export default function App({
 
   const activeRoom = useMemo(() => {
     return state.rooms.find(x => x.id === state.activeRoomId);
-  }, [state.activeRoomId]);
+  }, [state.rooms, state.activeRoomId]);
 
   const activateRoomsList = useCallback(() => {
     dispatch(actions.activeShortcutsChanged([]));
@@ -127,7 +129,7 @@ export default function App({
         handler: () => dispatch(actions.unpreviewMessage())
       }
     ]));
-  }, [messagePreviewer]);
+  }, []);
 
   const handleShortcut = useCallback((ch, key) => { // eslint-disable-line
     const shortcut = state.activeShortcuts.find(x => x.key === key.full); 
