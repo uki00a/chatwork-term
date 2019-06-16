@@ -1,9 +1,20 @@
 // @ts-check
 import * as actions from './actions';
+import * as Account from '../../core/account';
 
 /**
  * @typedef {ReturnType<import('../../modules/chatwork/client').default>} ChatworkClient
  */
+
+/**
+ * @param {object} param0
+ * @param {ChatworkClient} param0.client
+ * @param {Function} param0.dispatch
+ */
+export async function getMe({ client, dispatch }) {
+  const me = await client.getMe();
+  dispatch(actions.setMe(me));
+}
 
 /**
  * @param {object} param0
@@ -78,13 +89,15 @@ export function activateRoomsList({ dispatch }) {
  * @param {object[]} param0.messages
  * @param {number} param0.activeRoomId
  * @param {object} param0.messagesList
+ * @param {object} param0.me
  */
 export function activateMessagesList({
   messagesList,
   client,
   dispatch,
   messages,
-  activeRoomId
+  activeRoomId,
+  me
 }) {
   dispatch(actions.activateShortcuts([
     {
@@ -102,6 +115,11 @@ export function activateMessagesList({
       handler: () => {
         const index = messagesList.selected; // FIXME selected
         const message = messages[index];
+
+        if (!Account.canEditMessage(me, message)) {
+          return false;
+        }
+
         messagesList.screen.readEditor({ value: message.body }, async (error, body) => {
           if (error) {
             throw error; // TODO error handling

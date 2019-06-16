@@ -1,7 +1,8 @@
 import axios from 'axios';
 import {
   roomFromJSON,
-  messageFromJSON
+  messageFromJSON,
+  accountFromJSON
 } from './mappers';
 import { URLSearchParams } from 'url';
 
@@ -14,6 +15,10 @@ class ChatworkClient {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
     });
+  }
+
+  getMe() {
+    return this._callAPI('/me', accountFromJSON);
   }
 
   listRooms() {

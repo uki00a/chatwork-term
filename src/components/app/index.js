@@ -37,7 +37,10 @@ export default function App({
   }, []);
 
   useEffect(() => {
-    operations.loadRooms({ client, dispatch }).then(() => {
+    Promise.all([
+      operations.loadRooms({ client, dispatch }),
+      operations.getMe({ client, dispatch })
+    ]).then(() => {
       roomsList.current.focus();
     });
   }, [client]);
@@ -82,9 +85,10 @@ export default function App({
       dispatch,
       messages: state.messages,
       activeRoomId: state.activeRoomId,
+      me: state.me,
       client
     });
-  }, [state.messages, state.activeRoomId, client]);
+  }, [state.messages, state.activeRoomId, state.me, client]);
 
   const activateMessageEditor = useCallback(() => {
     operations.activateMessageEditor({

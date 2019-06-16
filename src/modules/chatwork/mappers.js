@@ -11,7 +11,7 @@ export const messageFromJSON = json => ({
   account: accountFromJSON(json.account)
 });
 
-const accountFromJSON = json => ({
+export const accountFromJSON = json => ({
   id: json.account_id,
   name: json.name
 });

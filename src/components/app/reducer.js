@@ -1,4 +1,5 @@
 import {
+  SET_ME,
   LIST_ROOMS_SUCCESS,
   LIST_MESSAGES_SUCCESS,
   ACTIVE_ROOM_CHANGED,
@@ -9,17 +10,20 @@ import {
   UNPREVIEW_MESSAGE
 } from './actions';
 
-export const initialState = {
+export const initialState = Object.freeze({
   rooms: [],
   messages: [],
   activeRoomId: null,
   activeShortcuts: [],
   theme: null,
-  messagePreviewer: null
-};
+  messagePreviewer: null,
+  me: null
+});
 
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
+  case SET_ME:
+    return { ...state, me: action.payload };
   case LIST_ROOMS_SUCCESS:
     return { ...state, rooms: action.payload };
   case LIST_MESSAGES_SUCCESS:
