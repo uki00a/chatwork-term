@@ -26,7 +26,10 @@ export default function MessagePreviewer({ message, open = false, ...restProps }
     <box
       scrollable
       scrollbar
+      alwaysScroll
       vi
+      keys
+      border='line'
       ref={messagePreviewer}
       { ...restProps }
     />
