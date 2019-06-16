@@ -117,7 +117,7 @@ export default function App({
         })
       }
     ]));
-  }, [messageEditor]);
+  }, [messageEditor, addMessageToRoom]);
 
   const activateMessagePreviewer = useCallback(() => {
     dispatch(actions.activeShortcutsChanged([
