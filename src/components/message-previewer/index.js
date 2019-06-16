@@ -29,7 +29,6 @@ export default function MessagePreviewer({ message, open = false, ...restProps }
       alwaysScroll
       vi
       keys
-      border='line'
       ref={messagePreviewer}
       { ...restProps }
     />

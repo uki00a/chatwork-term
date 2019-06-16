@@ -168,6 +168,7 @@ export default function App({
         message={state.messagePreviewer}
         onFocus={activateMessagePreviewer}
         onKeypress={handleShortcut}
+        style={state.theme.box}
         position={{ width: '100%', height: '95%' }}
       />
       <Shortcuts
