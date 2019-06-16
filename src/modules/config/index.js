@@ -51,7 +51,7 @@ function validateSettings(settings) {
   }
 
   if (typeof settings.pollingInterval === 'number' && settings.pollingInterval < MINIMUM_POLLING_INTERVAL) {
-    throw new Error(`settings.pollingInterval must be greather than or equal to ${MINIMUM_POLLING_INTERVAL}`);
+    throw new Error(`settings.json: pollingInterval must be greather than or equal to ${MINIMUM_POLLING_INTERVAL}`);
   }
 }
 
