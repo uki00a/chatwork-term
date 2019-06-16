@@ -62,3 +62,110 @@ export async function updateMessage({ client, dispatch, roomId, id, body }) {
   await client.updateMessage({ id, roomId, body });
   dispatch(actions.updateMessage({ id, roomId, body }));
 }
+
+/**
+ * @param {object} param0
+ * @param {Function} param0.dispatch
+ */
+export function activateRoomsList({ dispatch }) {
+  dispatch(actions.activeShortcutsChanged([]));
+}
+
+/**
+ * @param {object} param0
+ * @param {ChatworkClient} param0.client
+ * @param {Function} param0.dispatch
+ * @param {object[]} param0.messages
+ * @param {number} param0.activeRoomId
+ * @param {object} param0.messagesList
+ */
+export function activateMessagesList({
+  messagesList,
+  client,
+  dispatch,
+  messages,
+  activeRoomId
+}) {
+  dispatch(actions.activeShortcutsChanged([
+    {
+      key: 'return',
+      description: 'Preview',
+      handler: () => {
+        const index = messagesList.selected; // FIXME selected
+        const message = messages[index];
+        dispatch(actions.previewMessage(message));
+      }
+    },
+    {
+      key: 'C-e',
+      description: 'Edit',
+      handler: () => {
+        const index = messagesList.selected; // FIXME selected
+        const message = messages[index];
+        messagesList.screen.readEditor({ value: message.body }, async (error, body) => {
+          if (error) {
+            throw error; // TODO error handling
+          }
+          await updateMessage({
+            client,
+            dispatch,
+            id: message.id,
+            roomId: activeRoomId,
+            body
+          });
+        });
+      }
+    }
+  ]));
+}
+
+/**
+ * @param {object} param0
+ * @param {Function} param0.dispatch
+ * @param {object} param0.messageEditor
+ * @param {ChatworkClient} param0.client
+ * @param {number} param0.activeRoomId
+ */
+export function activateMessageEditor({
+  dispatch,
+  messageEditor,
+  client,
+  activeRoomId
+}) {
+  dispatch(actions.activeShortcutsChanged([
+    {
+      key: 'C-s',
+      description: 'Submit',
+      handler: async () => {
+        await addMessageToRoom({
+          body: messageEditor.getValue(),
+          client,
+          dispatch,
+          targetRoomId: activeRoomId
+        });
+        messageEditor.clearValue();
+      }
+    },
+    {
+      key: 'C-e',
+      description: 'Open editor',
+      handler: () => messageEditor.readEditor(value => {
+        messageEditor.setValue(value);
+      })
+    }
+  ]));
+}
+
+/**
+ * @param {object} param0
+ * @param {Function} param0.dispatch
+ */
+export function activateMessagePreviewer({ dispatch }) {
+  dispatch(actions.activeShortcutsChanged([
+    {
+      key: 'escape',
+      description: 'Close',
+      handler: () => dispatch(actions.unpreviewMessage())
+    }
+  ]));
+}

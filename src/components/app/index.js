@@ -70,85 +70,35 @@ export default function App({
     });
   }, [state.activeRoomId]);
 
-  const addMessageToRoom = useCallback(async body => {
-    await operations.addMessageToRoom({
-      client,
-      dispatch,
-      targetRoomId: state.activeRoomId,
-      body: body
-    });
-  }, [state.activeRoomId]);
-
   const activeRoom = useMemo(() => {
     return state.rooms.find(x => x.id === state.activeRoomId);
   }, [state.rooms, state.activeRoomId]);
 
   const activateRoomsList = useCallback(() => {
-    dispatch(actions.activeShortcutsChanged([]));
+    operations.activateRoomsList({ dispatch });
   }, []); 
 
   const activateMessagesList = useCallback(() => {
-    dispatch(actions.activeShortcutsChanged([
-      {
-        key: 'return',
-        description: 'Preview',
-        handler: () => {
-          const index = messagesList.current.selected; // FIXME selected
-          const message = state.messages[index];
-          dispatch(actions.previewMessage(message));
-        }
-      },
-      {
-        key: 'C-e',
-        description: 'Edit',
-        handler: () => {
-          const index = messagesList.current.selected; // FIXME selected
-          const message = state.messages[index];
-          messagesList.current.screen.readEditor({ value: message.body }, async (error, body) => {
-            if (error) {
-              throw error; // TODO error handling
-            }
-            await operations.updateMessage({
-              client,
-              dispatch,
-              id: message.id,
-              roomId: state.activeRoomId,
-              body
-            });
-          });
-        }
-      }
-    ]));
+    operations.activateMessagesList({
+      messagesList: messagesList.current,
+      dispatch,
+      messages: state.messages,
+      activeRoomId: state.activeRoomId,
+      client
+    });
   }, [state.messages, state.activeRoomId]);
 
   const activateMessageEditor = useCallback(() => {
-    dispatch(actions.activeShortcutsChanged([
-      {
-        key: 'C-s',
-        description: 'Submit',
-        handler: () => {
-          addMessageToRoom(messageEditor.current.getValue());
-          messageEditor.current.clearValue();
-        }
-      },
-      {
-        key: 'C-e',
-        description: 'Open editor',
-        handler: () => messageEditor.current.readEditor(value => {
-          messageEditor.current.setValue(value);
-        })
-      }
-    ]));
-  }, [messageEditor, addMessageToRoom]);
+    operations.activateMessageEditor({
+      dispatch,
+      messageEditor: messageEditor.current,
+      client,
+      activeRoomId: state.activeRoomId
+    });
+  }, [state.activeRoomId]);
 
   const activateMessagePreviewer = useCallback(() => {
-    dispatch(actions.activeShortcutsChanged([
-      {
-        key: 'escape',
-        description: 'Close',
-        handler: () => dispatch(actions.unpreviewMessage())
-      }
-    ]));
+    operations.activateMessagePreviewer({ dispatch });
   }, []);
 
   const handleShortcut = useCallback((ch, key) => { // eslint-disable-line
