@@ -35,11 +35,13 @@ const MessagesList = forwardRef(({
         selectLastChild(element);
       }
       break;
+    case 'down':
     case 'j':
       if (element.children.length > 0) {
         selectLastOrNextChild(element);
       }
       break;
+    case 'up':
     case 'k':
       if (element.children.length > 0) {
         selectFirstOrPreviousChild(element);
