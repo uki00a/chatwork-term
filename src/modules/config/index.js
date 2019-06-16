@@ -6,6 +6,8 @@ import xdgBaseDir from 'xdg-basedir';
  * @typedef {object} Settings
  * @prop {string} accessToken
  * @prop {'dark'|'dark-blue'|'light'} theme
+ * @prop {number} [pollingInterval]
+ * @prop {bool} [enablePolling]
  */
 
 // TODO improve error handling

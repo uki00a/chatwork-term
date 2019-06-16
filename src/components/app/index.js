@@ -14,7 +14,13 @@ import Shortcuts from '../shortcuts';
 import reducer from './reducer';
 import * as actions from './actions';
 import * as operations from './operations';
+import { startPolling } from './polling';
 
+/**
+ * @param {object} param0
+ * @param {ReturnType<import('../../modules/chatwork/client').default>} param0.client
+ * @param {import('../../modules/config').Settings} param0.settings
+ */
 export default function App({
   settings,
   client,
@@ -42,6 +48,17 @@ export default function App({
       messagesList.current.focus();
     }
   }, [state.messages]);
+
+  if (settings.enablePolling) {
+    useEffect(() => {
+      return startPolling({
+        client,
+        settings,
+        dispatch,
+        targetRoomId: state.activeRoomId
+      });
+    }, [state.activeRoomId, messagesList]);
+  }
 
   const handleRoomSelect = useCallback(async room => {
     await operations.activateRoom({
