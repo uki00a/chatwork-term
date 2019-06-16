@@ -58,8 +58,9 @@ function validateSettings(settings) {
 /**
  * @returns {Promise<Settings>}
  */
-function readSettings() {
-  return readJSONFile(buildConfigPath(SETTINGS_JSON));
+async function readSettings() {
+  const settings = await readJSONFile(buildConfigPath(SETTINGS_JSON));
+  return fillDefaultSettings(settings);
 }
 
 /**
@@ -74,7 +75,7 @@ function writeSettings(settings) {
  */
 async function createSettings() {
   const accessToken = await promptAccessToken();
-  const settings = mergeSettings({ accessToken });
+  const settings = fillDefaultSettings({ accessToken });
   validateSettings(settings);
   await ensureConfigDirectory();
   await writeSettings(settings);
@@ -82,10 +83,10 @@ async function createSettings() {
 }
 
 /**
- * @param {Settings} settings 
+ * @param {Settings} settings
  * @returns {Settings}
  */
-function mergeSettings(settings) {
+function fillDefaultSettings(settings) {
   return {
     ...defaultSettings,
     ...settings
