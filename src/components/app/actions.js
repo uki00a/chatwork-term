@@ -7,6 +7,8 @@ export const UPDATE_MESSAGE = 'UPDATE_MESSAGE';
 export const ACTIVATE_SHORTCUTS = 'ACTIVATE_SHORTCUTS';
 export const PREVIEW_MESSAGE = 'PREVIEW_MESSAGE';
 export const UNPREVIEW_MESSAGE = 'UNPREVIEW_MESSAGE';
+export const SET_STATUS = 'SET_STATUS';
+export const CLEAR_STATUS = 'CLEAR_STATUS';
 
 export function setMe(me) {
   return { type: SET_ME, payload: me };
@@ -42,4 +44,12 @@ export function previewMessage(message) {
 
 export function unpreviewMessage() {
   return { type: UNPREVIEW_MESSAGE };
+}
+
+export function setStatus(status) {
+  return { type: SET_STATUS, payload: status };
+}
+
+export function clearStatus() {
+  return { type: CLEAR_STATUS };
 }

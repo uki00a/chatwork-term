@@ -7,7 +7,9 @@ import {
   UPDATE_MESSAGE,
   ACTIVATE_SHORTCUTS,
   PREVIEW_MESSAGE,
-  UNPREVIEW_MESSAGE
+  UNPREVIEW_MESSAGE,
+  SET_STATUS,
+  CLEAR_STATUS
 } from './actions';
 
 export const initialState = Object.freeze({
@@ -17,7 +19,8 @@ export const initialState = Object.freeze({
   activeShortcuts: [],
   theme: null,
   messagePreviewer: null,
-  me: null
+  me: null,
+  status: null
 });
 
 export default function reducer(state = initialState, action = {}) {
@@ -60,6 +63,10 @@ export default function reducer(state = initialState, action = {}) {
     return { ...state, messagePreviewer: action.payload };
   case UNPREVIEW_MESSAGE:
     return { ...state, messagePreviewer: null };
+  case SET_STATUS:
+    return { ...state, status: action.payload };
+  case CLEAR_STATUS:
+    return { ...state, status: '' };
   default:
     return state;
   }

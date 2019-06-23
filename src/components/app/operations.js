@@ -22,8 +22,10 @@ export async function getMe({ client, dispatch }) {
  * @param {Function} param0.dispatch
  */
 export async function loadRooms({ client, dispatch }) {
+  dispatch(actions.setStatus('Loading list of rooms...'));
   const rooms = await client.listRooms();
   dispatch(actions.listRoomsSuccess(rooms));
+  dispatch(actions.clearStatus());
 }
 
 /**
@@ -33,8 +35,10 @@ export async function loadRooms({ client, dispatch }) {
  * @param {number} param0.targetRoomId
  */
 export async function listMessagesInRoom({ client, dispatch, targetRoomId }) {
+  dispatch(actions.setStatus('Loading list of messages...'));
   const messages = await client.listMessagesInRoom(targetRoomId);
   dispatch(actions.listMessagesSuccess(messages));
+  dispatch(actions.clearStatus());
 }
 
 /**
@@ -56,9 +60,11 @@ export async function activateRoom({ client, dispatch, targetRoomId }) {
  * @param {string} param0.body
  */
 export async function addMessageToRoom({ client, dispatch, targetRoomId, body }) {
+  dispatch(actions.setStatus('Now adding message to room...'));
   const id = await client.addMessageToRoom(body, targetRoomId);
   const newMessage = await client.getMessageById(id, targetRoomId);
   dispatch(actions.addMessageToRoomSuccess({ message: newMessage, targetRoomId }));
+  dispatch(actions.clearStatus());
 }
 
 /**
@@ -70,8 +76,10 @@ export async function addMessageToRoom({ client, dispatch, targetRoomId, body })
  * @param {string} param0.body
  */
 export async function updateMessage({ client, dispatch, roomId, id, body }) {
+  dispatch(actions.setStatus('Now updating message...'));
   await client.updateMessage({ id, roomId, body });
   dispatch(actions.updateMessage({ id, roomId, body }));
+  dispatch(actions.clearStatus());
 }
 
 /**

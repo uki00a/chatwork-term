@@ -10,6 +10,7 @@ import RoomsList from '../rooms-list';
 import MessagesList from '../messages-list';
 import MessageEditor from '../message-editor';
 import MessagePreviewer from '../message-previewer';
+import Status from '../status';
 import Shortcuts from '../shortcuts';
 import reducer from './reducer';
 import * as operations from './operations';
@@ -152,8 +153,12 @@ export default function App({
         style={state.theme.box}
         position={{ width: '100%', height: '95%' }}
       />
+      <Status
+        status={state.status}
+        position={{ height: '2%', top: '95%', width: '100%' }}
+      />
       <Shortcuts
-        position={{ height: '5%', top: '95%', width: '100%' }}
+        position={{ height: '3%', top: '97%', width: '100%' }}
         shortcuts={state.activeShortcuts}
       />
     </box>
