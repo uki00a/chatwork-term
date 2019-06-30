@@ -151,7 +151,7 @@ export default function App({
         onFocus={activateMessagePreviewer}
         onKeypress={handleShortcut}
         style={state.theme.box}
-        position={{ width: '100%', height: '95%' }}
+        position={{ width: '80%', height: '80%', left: 'center', top: 'center' }}
       />
       <Status
         status={state.status}

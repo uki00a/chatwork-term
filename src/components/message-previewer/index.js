@@ -1,4 +1,5 @@
 import { createElement, useRef, useEffect } from 'rax';
+import blessed from 'neo-blessed';
 import parseMarkdown from '../../modules/markdown';
 
 export default function MessagePreviewer({ message, open = false, ...restProps }) {
@@ -14,6 +15,8 @@ export default function MessagePreviewer({ message, open = false, ...restProps }
       messagePreviewer.current.focus();
       messagePreviewer.current.setFront();
       messagePreviewer.current.setContent(parseMarkdown(message.body));
+
+      messagePreviewer.current.setLabel(`{bold}{gray-fg}[${message.account.name}] ${message.sendTime}{/}`);
       messagePreviewer.current.setScrollPerc(0);
       messagePreviewer.current.show();
     } else {
@@ -30,8 +33,12 @@ export default function MessagePreviewer({ message, open = false, ...restProps }
       alwaysScroll
       vi
       keys
+      border='line'
+      tags
       ref={messagePreviewer}
       { ...restProps }
     />
   );
 }
+
+

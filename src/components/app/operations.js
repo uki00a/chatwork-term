@@ -197,6 +197,11 @@ export function activateMessagePreviewer({ dispatch }) {
       key: 'backspace',
       description: 'Close',
       handler: () => dispatch(actions.unpreviewMessage())
+    },
+    {
+      key: 'tab',
+      description: 'Close',
+      handler: () => dispatch(actions.unpreviewMessage())
     }
   ]));
 }
