@@ -6,7 +6,10 @@ import createChatworkClient from './modules/chatwork/client';
 import { readOrCreateSettings } from './modules/config';
 import { initializeTheme } from './modules/theme';
 import createScreen from './screen';
-import reducer from './components/app/reducer';
+import { MessagesContainer } from './containers/messages';
+import { ShortcutsContainer } from './containers/shortcuts';
+import { MessagePreviewerContainer } from './containers/message-previewer';
+import { StatusContainer } from './containers/status';
 
 const driver = createDriver(blessed);
 
@@ -15,18 +18,21 @@ async function main() {
   const client = createChatworkClient({
     accessToken: settings.accessToken
   });
-  // FIXME
-  const state = {
-    ...reducer(),
-    theme: initializeTheme(settings.theme)
-  };
   const screen = createScreen();
   render(
-    <App
-      client={client}
-      settings={settings}
-      initialState={state}
-    />,
+    <StatusContainer.Provider>
+      <ShortcutsContainer.Provider>
+        <MessagesContainer.Provider>
+          <MessagePreviewerContainer.Provider>
+            <App
+              client={client}
+              settings={settings}
+              theme={initializeTheme(settings.theme)}
+            />
+          </MessagePreviewerContainer.Provider>
+        </MessagesContainer.Provider>
+      </ShortcutsContainer.Provider>
+    </StatusContainer.Provider>,
     screen,
     { driver }
   );

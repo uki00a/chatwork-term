@@ -1,4 +1,17 @@
 import { createElement } from 'rax';
+import { useContainer } from '../../hooks/container';
+import { ShortcutsContainer } from '../../containers/shortcuts';
+
+export default function(props) {
+  const { shortcuts } = useContainer(ShortcutsContainer);
+
+  return (
+    <Shortcuts
+      shortcuts={shortcuts}
+      {...props}
+    />
+  );
+}
 
 const Shortcuts = ({ shortcuts, ...restProps }) => {
   const label = [
@@ -13,5 +26,3 @@ const Shortcuts = ({ shortcuts, ...restProps }) => {
     />
   );
 };
-
-export default Shortcuts;

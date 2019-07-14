@@ -1,3 +1,4 @@
+import assert from 'assert';
 import axios from 'axios';
 import {
   roomFromJSON,
@@ -26,6 +27,7 @@ class ChatworkClient {
   }
 
   listMessagesInRoom(roomId) {
+    assert(roomId);
     return this._callAPI(`/rooms/${roomId}/messages`, messageFromJSON, {
       params: { force: 1 }
     }).then(removeInvalidMessages);
@@ -36,6 +38,7 @@ class ChatworkClient {
   }
 
   addMessageToRoom(body, roomId) {
+    assert(roomId);
     return this._callAPI(`/rooms/${roomId}/messages`, x => x.message_id, {
       method: 'POST',
       data: toURLSearchParams({ body })
