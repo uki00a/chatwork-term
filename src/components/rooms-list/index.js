@@ -1,5 +1,5 @@
-import { createElement, forwardRef, useState, useEffect, useRef, useCallback } from 'rax';
-import blessed from 'neo-blessed';
+import { createElement, useState, useEffect, useRef, useCallback } from 'rax';
+import RoomsList from './rooms-list';
 import { useContainer } from '../../hooks/container';
 import { usePolling } from '../../hooks/polling';
 import { ShortcutsContainer } from '../../containers/shortcuts';
@@ -43,33 +43,5 @@ export default function({ client, settings, ...restProps }) {
       {...restProps}
     />
   );
-}
-
-const RoomsList = forwardRef(({
-  rooms = [],
-  onSelect,
-  ...restProps
-}, ref) => (
-  <list
-    onSelect={(_, index) => onSelect(rooms[index])}
-    ref={ref}
-    items={rooms.map(formatRoomName)}
-    width='90%'
-    height='85%'
-    left='5%'
-    top='11%'
-    keys
-    vi
-    keyable
-    border='line'
-    tags
-    {...restProps}>
-  </list>
-));
-
-function formatRoomName(room) {
-  return room.unreadNum > 0
-    ? `{bold}${blessed.helpers.escape(room.name)} (${room.unreadNum}){/}`
-    : room.name;
 }
 

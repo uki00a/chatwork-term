@@ -1,4 +1,5 @@
-import { forwardRef, createElement, useCallback, useRef } from 'rax';
+import { createElement, useCallback, useRef } from 'rax';
+import MessageEditor from './message-editor';
 import { useContainer } from '../../hooks/container';
 import { ShortcutsContainer } from '../../containers/shortcuts';
 import { StatusContainer } from '../../containers/status';
@@ -51,16 +52,3 @@ export default function({ client, roomId, ...restProps }) {
     />
   );
 }
-
-const MessageEditor = forwardRef((props, ref) => {
-  return (
-    <textarea
-      ref={ref}
-      keyable
-      vi
-      inputOnFocus
-      border='line'
-      { ...props }
-    />
-  );
-});
