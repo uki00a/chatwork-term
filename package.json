@@ -17,7 +17,7 @@
     "clean": "rm -rf ./lib"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "make-dir": "^3.0.0",
     "marked": "^0.6.2",
     "marked-terminal": "^3.2.0",
